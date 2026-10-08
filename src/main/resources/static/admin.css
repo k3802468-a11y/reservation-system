@@ -624,3 +624,389 @@ tr:hover {
   color: #fff;
 }
 
+/* =========================================
+   Mobile Responsive Design
+   ========================================= */
+
+@media (max-width: 768px) {
+
+  /* ---------- Global ---------- */
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem 0.75rem;
+  }
+
+  /* ---------- Navbar ---------- */
+
+  .navbar {
+    padding: 0.85rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .brand {
+    min-width: 0;
+    gap: 0.5rem;
+  }
+
+  .brand-logo {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 1rem;
+  }
+
+  .brand-title {
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .user-info {
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .btn-logout {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  /* ---------- Login ---------- */
+
+  .login-wrapper {
+    min-height: calc(100vh - 100px);
+    padding: 1rem 0;
+  }
+
+  .login-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  /* ---------- Navigation Tabs ---------- */
+
+  .nav-tabs {
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.6rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    flex: 0 0 auto;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  /* ---------- Statistics ---------- */
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+    min-width: 0;
+  }
+
+  .stat-title {
+    font-size: 0.78rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .stat-desc {
+    font-size: 0.72rem;
+  }
+
+  /* ---------- Controls ---------- */
+
+  .controls-bar {
+    padding: 0.85rem;
+    margin-bottom: 1rem;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .controls-left,
+  .controls-right {
+    width: 100%;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .controls-left > *,
+  .controls-right > * {
+    min-width: 0;
+  }
+
+  .controls-left .form-input {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .controls-right {
+    justify-content: stretch;
+  }
+
+  .controls-right .btn-add {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .filter-btn {
+    flex: 1 1 auto;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.78rem;
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  /* ---------- Reservation Table ---------- */
+
+  .table-panel {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 900px;
+  }
+
+  th,
+  td {
+    padding: 0.75rem 0.9rem;
+    white-space: nowrap;
+  }
+
+  th {
+    font-size: 0.78rem;
+  }
+
+  /* ---------- Closure Management ---------- */
+
+  .closure-grid {
+    gap: 1rem;
+  }
+
+  .closure-card {
+    padding: 1.1rem;
+    border-radius: 12px;
+  }
+
+  .closure-card-header {
+    margin-bottom: 1rem;
+  }
+
+  .closure-card-header h3 {
+    font-size: 1rem;
+  }
+
+  .closure-card-header p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  /* ---------- Weekday Buttons ---------- */
+
+  .weekday-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+
+  .weekday-btn {
+    min-width: 0;
+    padding: 0.7rem 0.25rem;
+    font-size: 0.82rem;
+  }
+
+  .weekday-btn.active::after {
+    display: none;
+  }
+
+  /* ---------- Closure Form ---------- */
+
+  .closure-form-inputs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .closure-form-inputs .form-group {
+    width: 100%;
+  }
+
+  .closure-form-inputs > div:last-child {
+    width: 100%;
+  }
+
+  .btn-add-closure {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* ---------- Closed Dates ---------- */
+
+  .closed-dates-list-wrap {
+    padding: 0.9rem;
+  }
+
+  .closed-dates-list {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .closed-date-card {
+    padding: 0.7rem 0.8rem;
+  }
+
+  /* ---------- Modal ---------- */
+
+  .modal-overlay {
+    padding: 0.75rem;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .modal-card {
+    width: 100%;
+    max-width: none;
+    margin: 1rem 0;
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    margin-bottom: 1rem;
+  }
+
+  .modal-header h3 {
+    font-size: 1.1rem;
+  }
+
+  /*
+   * 手機版把「時間 + 人數」從左右排列
+   * 改成上下排列，避免輸入框太窄。
+   */
+  #add-form .form-group[style*="display: flex"] {
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+
+  #add-form .form-group[style*="display: flex"] > div {
+    width: 100%;
+  }
+
+  /* ---------- Form Inputs ---------- */
+
+  .form-input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  textarea.form-input {
+    resize: vertical;
+  }
+}
+
+
+/* =========================================
+   Small Phones
+   ========================================= */
+
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 0.75rem;
+  }
+
+  .brand-title {
+    font-size: 0.9rem;
+  }
+
+  .btn-logout {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.55rem;
+  }
+
+  .container {
+    padding: 0.75rem 0.6rem;
+  }
+
+  .stats-grid {
+    gap: 0.5rem;
+  }
+
+  .stat-card {
+    padding: 0.8rem;
+  }
+
+  .stat-title {
+    font-size: 0.72rem;
+  }
+
+  .stat-value {
+    font-size: 1.3rem;
+  }
+
+  .stat-desc {
+    font-size: 0.68rem;
+  }
+
+  .controls-bar {
+    padding: 0.7rem;
+  }
+
+  /*
+   * 手機很窄時，篩選按鈕改成兩列，
+   * 避免全部擠在同一行。
+   */
+  .controls-left .filter-btn {
+    flex: 1 1 calc(50% - 0.25rem);
+  }
+
+  .weekday-selector {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .weekday-btn {
+    font-size: 0.78rem;
+    padding: 0.65rem 0.2rem;
+  }
+
+  .closure-card {
+    padding: 0.9rem;
+  }
+
+  .closed-date-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-delete-closure {
+    width: 100%;
+  }
+}
+
