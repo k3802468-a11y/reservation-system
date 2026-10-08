@@ -31,5 +31,5 @@ spring:
       - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
 
 jwt:
-  secret: dev-only-secret-key-at-least-32-characters-long
-  expiration: 86400000
+  secret: ${JWT_SECRET:dev-only-secret-key-at-least-32-characters-long}
+  expiration: ${JWT_EXPIRATION:86400000}
