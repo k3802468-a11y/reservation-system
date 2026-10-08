@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>煙深雨靜｜店家預約管理後台</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-logo">煙</div>
+      <div class="brand-title">煙深雨靜 · 店家管理後台</div>
+    </div>
+    <div id="nav-user" class="user-info hidden">
+      <span>管理員已登入</span>
+      <button id="logout-btn" class="btn-logout">登出</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Login View Section -->
+    <section id="login-section" class="login-wrapper">
+      <div class="login-card">
+        <div class="login-header">
+          <h2>店家登入</h2>
+          <p>請輸入您的管理員帳號與密碼</p>
+        </div>
+
+        <div id="login-error" class="alert-error hidden"></div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label for="username">帳號</label>
+            <input id="username" name="username" type="text" class="form-input" required value="VorCoffee">
+          </div>
+
+          <div class="form-group">
+            <label for="password">密碼</label>
+            <input id="password" name="password" type="password" class="form-input" required placeholder="請輸入密碼">
+          </div>
+
+          <button type="submit" class="btn-primary">登入管理後台</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Dashboard View Section -->
+    <section id="dashboard-section" class="hidden">
+
+      <!-- Navigation Tabs -->
+      <div class="nav-tabs">
+        <button class="tab-btn active" data-tab="reservations-tab">📅 預約管理</button>
+        <button class="tab-btn" data-tab="closure-tab">🚫 公休與休假設定</button>
+      </div>
+
+      <!-- Tab 1: Reservations -->
+      <div id="reservations-tab" class="tab-content active">
+        <!-- Statistics Row -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-title">今日預約總數</span>
+            <span id="stat-total" class="stat-value">0</span>
+            <span class="stat-desc">即時更新</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-title">已完成預約</span>
+            <span id="stat-completed" class="stat-value" style="color: #10b981;">0</span>
+            <span class="stat-desc">到店率分析</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-title">未到店 (No Show)</span>
+            <span id="stat-noshow" class="stat-value" style="color: #ef4444;">0</span>
+            <span class="stat-desc">風險追蹤</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-title">老客回訪率</span>
+            <span id="stat-returning" class="stat-value" style="color: #f59e0b;">0%</span>
+            <span class="stat-desc">顧客忠誠度</span>
+          </div>
+        </div>
+
+        <!-- Controls & Filter Row -->
+        <div class="controls-bar">
+          <div class="controls-left">
+            <input type="date" id="date-picker" class="form-input" style="width: auto; padding: 0.45rem 0.8rem;">
+            <input type="text" id="search-input" class="form-input" placeholder="搜尋顧客姓名或電話..." style="width: 220px; padding: 0.45rem 0.8rem;">
+            
+            <button class="filter-btn active" data-status="ALL">全部</button>
+            <button class="filter-btn" data-status="PENDING">待確認</button>
+            <button class="filter-btn" data-status="CONFIRMED">已確認</button>
+            <button class="filter-btn" data-status="COMPLETED">已完成</button>
+            <button class="filter-btn" data-status="NO_SHOW">未到店</button>
+            <button class="filter-btn" data-status="CANCELLED">已取消</button>
+          </div>
+
+          <div class="controls-right">
+            <button id="open-add-btn" class="btn-add">＋ 新增預約</button>
+          </div>
+        </div>
+
+        <!-- Reservations Table -->
+        <div class="table-panel">
+          <table>
+            <thead>
+              <tr>
+                <th>時間</th>
+                <th>顧客姓名</th>
+                <th>人數</th>
+                <th>聯絡電話</th>
+                <th>推薦店員</th>
+                <th>備註</th>
+                <th>預約狀態 (可下拉變更)</th>
+              </tr>
+            </thead>
+            <tbody id="reservation-table-body">
+              <!-- Dynamic rows will be inserted here -->
+            </tbody>
+          </table>
+          <div id="empty-message" class="hidden" style="text-align: center; padding: 3rem; color: #94a3b8;">
+            此條件下尚無預約紀錄
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Store Closure Settings -->
+      <div id="closure-tab" class="tab-content">
+        <div class="closure-grid">
+          
+          <!-- Regular Weekly Days Off Card -->
+          <div class="closure-card">
+            <div class="closure-card-header">
+              <h3>🗓️ 每週固定公休日</h3>
+              <p>設定每週固定不營業的星期，顧客將無法在該星期訂位。</p>
+            </div>
+            
+            <div class="weekday-selector">
+              <button type="button" class="weekday-btn" data-day="1">週一</button>
+              <button type="button" class="weekday-btn" data-day="2">週二</button>
+              <button type="button" class="weekday-btn" data-day="3">週三</button>
+              <button type="button" class="weekday-btn" data-day="4">週四</button>
+              <button type="button" class="weekday-btn" data-day="5">週五</button>
+              <button type="button" class="weekday-btn" data-day="6">週六</button>
+              <button type="button" class="weekday-btn" data-day="0">週日</button>
+            </div>
+
+            <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+              <button id="save-regular-days-btn" class="btn-save-closure">儲存每週公休設定</button>
+            </div>
+          </div>
+
+          <!-- Ad-hoc Closure Dates Card -->
+          <div class="closure-card">
+            <div class="closure-card-header">
+              <h3>🌴 臨時休假 / 特殊公休日期</h3>
+              <p>設定特定單日的臨時休假（例如：員工旅遊、店休整修、颱風假等）。</p>
+            </div>
+
+            <form id="add-closure-date-form" class="closure-form">
+              <div class="closure-form-inputs">
+                <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                  <label for="closure-date-input">休假日期 *</label>
+                  <input type="date" id="closure-date-input" class="form-input" required>
+                </div>
+                <div class="form-group" style="flex: 2; margin-bottom: 0;">
+                  <label for="closure-reason-input">休假原因（選填）</label>
+                  <input type="text" id="closure-reason-input" class="form-input" placeholder="例如：店內設備保養、員旅店休">
+                </div>
+                <div style="align-self: flex-end;">
+                  <button type="submit" class="btn-add-closure">＋ 新增休假</button>
+                </div>
+              </div>
+            </form>
+
+            <div class="closed-dates-list-wrap">
+              <h4 style="font-size: 0.95rem; color: #94a3b8; margin-bottom: 0.75rem;">已設定的臨時休假清單：</h4>
+              <div id="closed-dates-list" class="closed-dates-list">
+                <!-- Dynamically filled -->
+              </div>
+              <div id="closure-empty-msg" class="hidden" style="text-align: center; padding: 2rem; color: #64748b; font-size: 0.9rem;">
+                目前尚無設定任何臨時休假日期
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Add Reservation Modal -->
+  <div id="add-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>手動建立預約</h3>
+        <button id="close-add-btn" class="btn-close">&times;</button>
+      </div>
+
+      <form id="add-form">
+        <div class="form-group">
+          <label>顧客姓名 *</label>
+          <input name="name" type="text" class="form-input" required placeholder="請輸入姓名">
+        </div>
+        <div class="form-group">
+          <label>聯絡電話 *</label>
+          <input name="phone" type="tel" class="form-input" required placeholder="09xxxxxxxx">
+        </div>
+        <div class="form-group" style="display: flex; gap: 1rem;">
+          <div style="flex: 1;">
+            <label>時間 *</label>
+            <input name="time" type="time" class="form-input" required value="18:00">
+          </div>
+          <div style="flex: 1;">
+            <label>人數 *</label>
+            <input name="guestCount" type="number" min="1" max="99" class="form-input" required value="2">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>推薦店員 (選填)</label>
+          <input name="recommendedBy" type="text" class="form-input" placeholder="請輸入店員姓名">
+        </div>
+        <div class="form-group">
+          <label>備註 (選填)</label>
+          <textarea name="notes" class="form-input" rows="2" placeholder="特別需求說明"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top: 1rem;">送出新增</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+
+</html>

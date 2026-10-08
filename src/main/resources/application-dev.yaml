@@ -1,0 +1,35 @@
+# ──────────────────────────────────────────────────────
+#  Dev Profile — 使用 H2 記憶體資料庫，不需要 MySQL / Redis
+#  啟動方式：
+#    mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+# ──────────────────────────────────────────────────────
+spring:
+  datasource:
+    url: jdbc:h2:mem:reservation_dev;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop      # 每次啟動重建 schema，方便測試
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  # H2 Web Console（可用瀏覽器開啟 http://localhost:8080/h2-console 查看資料）
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # 停用 Redis 自動設定（dev 不需要 cache）
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+
+jwt:
+  secret: dev-only-secret-key-at-least-32-characters-long
+  expiration: 86400000
