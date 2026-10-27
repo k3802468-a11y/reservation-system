@@ -16,6 +16,8 @@ docker compose up --build
 
 服務啟動後，請從瀏覽器開啟 [http://localhost:8080](http://localhost:8080)，不要直接以 `file:///` 開啟 HTML；唯有透過後端服務開啟，預約表單才能呼叫 API。
 
+Docker Compose 會一併啟動 MySQL 與 Redis；Redis 用於保存登入 refresh token，token 失效時間為 30 天。使用 `dev` 設定檔在本機啟動時，也需要先啟動 Redis（`localhost:6379`）。
+
 預設店家帳號：`admin`  
 預設密碼：`123456`
 

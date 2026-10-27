@@ -8,7 +8,9 @@ import com.reservation.vor.reservation_system.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.reservation.vor.reservation_system.security.JwtService;
+import org.springframework.data.redis.core.StringRedisTemplate;
+
+import java.time.Duration;
 
 
 @Service
@@ -23,6 +25,9 @@ public class AuthService {
 
 
     private final JwtService jwtService;
+    private final StringRedisTemplate redisTemplate;
+
+    private static final Duration REFRESH_TOKEN_TTL = Duration.ofDays(30);
 
 
 
@@ -62,6 +67,12 @@ public class AuthService {
         String refreshToken =
                 jwtService.generateRefreshToken(employee);
 
+        redisTemplate.opsForValue().set(
+                refreshTokenKey(employee.getUsername()),
+                refreshToken,
+                REFRESH_TOKEN_TTL
+        );
+
 
 
         return LoginResponse.builder()
@@ -91,12 +102,11 @@ public class AuthService {
 
         }
 
-
-        String username =
-                jwtService.extractUsername(
-                        refreshToken
-                );
-
+        String username = jwtService.extractUsername(refreshToken);
+        String storedRefreshToken = redisTemplate.opsForValue().get(refreshTokenKey(username));
+        if (!refreshToken.equals(storedRefreshToken)) {
+            throw new RuntimeException("Refresh Token 已失效");
+        }
 
         Employee employee =
                 employeeRepository
@@ -128,5 +138,9 @@ public class AuthService {
 
                 .build();
 
+    }
+
+    private String refreshTokenKey(String username) {
+        return "auth:refresh:" + username;
     }
 }

@@ -6,6 +6,8 @@ import com.reservation.vor.reservation_system.entity.StoreSettings;
 import com.reservation.vor.reservation_system.repository.ClosedDateRepository;
 import com.reservation.vor.reservation_system.repository.StoreSettingsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ public class StoreClosureService {
     /**
      * Check if a specific date is closed (either regular weekly day off or ad-hoc closure).
      */
+    @Cacheable(cacheNames = "closed-date-checks", key = "#date")
     public boolean isDateClosed(LocalDate date) {
         if (date == null) return false;
 
@@ -59,6 +62,7 @@ public class StoreClosureService {
      * Update regular closed days.
      */
     @Transactional
+    @CacheEvict(cacheNames = "closed-date-checks", allEntries = true)
     public void setRegularClosedDays(List<Integer> days) {
         StoreSettings settings = storeSettingsRepository.findById(SETTINGS_ID)
                 .orElse(StoreSettings.builder().id(SETTINGS_ID).build());
@@ -82,6 +86,7 @@ public class StoreClosureService {
      * Add an ad-hoc closure date.
      */
     @Transactional
+    @CacheEvict(cacheNames = "closed-date-checks", allEntries = true)
     public ClosedDate addClosedDate(LocalDate date, String reason) {
         if (date == null) {
             throw new IllegalArgumentException("休假日期不能為空");
@@ -101,6 +106,7 @@ public class StoreClosureService {
      * Remove an ad-hoc closure date.
      */
     @Transactional
+    @CacheEvict(cacheNames = "closed-date-checks", allEntries = true)
     public void removeClosedDate(LocalDate date) {
         closedDateRepository.findByDate(date).ifPresent(closedDateRepository::delete);
     }
@@ -109,6 +115,7 @@ public class StoreClosureService {
      * Remove an ad-hoc closure date by ID.
      */
     @Transactional
+    @CacheEvict(cacheNames = "closed-date-checks", allEntries = true)
     public void removeClosedDateById(Long id) {
         closedDateRepository.deleteById(id);
     }
